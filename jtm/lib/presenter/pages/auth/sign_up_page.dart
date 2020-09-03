@@ -8,10 +8,10 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _confirmPasswordController =
-      TextEditingController();
+  final TextEditingController _username = TextEditingController();
+  final TextEditingController _email = TextEditingController();
+  final TextEditingController _password = TextEditingController();
+  final TextEditingController _confirmPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +24,22 @@ class _SignUpPageState extends State<SignUpPage> {
   Widget signUpForm() {
     final _formKey = GlobalKey<FormState>();
 
-    return Form(
+    return SafeArea(child: Form(
       key: _formKey,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 110),
+        padding: EdgeInsets.fromLTRB(20, 75, 20, 0),
         child: ListView(
             shrinkWrap: true,
             padding: EdgeInsets.symmetric(horizontal: 20),
             children: <Widget>[
-              signUpEmailField(_emailController),
-              signUpPasswordField(_passwordController),
-              signUpPasswordConfirmField(_confirmPasswordController),
-              signUpBtn(_formKey),
+              signUpUsernameField(_username),
+              signUpEmailField(_email),
+              signUpPasswordField(_password),
+              signUpPasswordConfirmField(_confirmPassword, _password),
+              signUpBtn(context, _formKey, _username, _email, _password),
               signInBtn(context)
             ]),
       ),
-    );
+    ));
   }
 }

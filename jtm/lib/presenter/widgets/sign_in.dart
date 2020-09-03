@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jtm/data/service/auth_service.dart';
 
+
 Widget emailSignInField(TextEditingController controller) {
   return Padding(
     padding: EdgeInsets.only(bottom: 10),
@@ -44,7 +45,7 @@ Widget passwordSignInField(TextEditingController controller) {
   );
 }
 
-Widget signInBtn(GlobalKey<FormState> formKey, TextEditingController _email, TextEditingController _password) {
+Widget signInBtn(BuildContext context, GlobalKey<FormState> formKey, TextEditingController _email, TextEditingController _password) {
   final authService = AuthService();
 
   return Padding(
@@ -59,6 +60,9 @@ Widget signInBtn(GlobalKey<FormState> formKey, TextEditingController _email, Tex
         onPressed: () async => {
           if (formKey.currentState.validate()) {
             await authService.login(_email.value.text, _password.value.text)
+                              .then((value) => {
+                                Navigator.of(context).pushReplacementNamed('/home')
+                              })
                               .catchError((error) {
                                 print(error.toString());
                               })

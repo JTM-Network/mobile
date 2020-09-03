@@ -1,5 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:jtm/presenter/pages/auth/sign_in_page.dart';
+import 'package:jtm/data/service/auth_service.dart';
+
+
+Widget signUpUsernameField(TextEditingController _controller) {
+  return Padding(
+    padding: EdgeInsets.only(bottom: 10),
+    child: TextFormField(
+      controller: _controller,
+      keyboardType: TextInputType.text,
+      decoration: InputDecoration(
+        hintText: 'Enter a username',
+        contentPadding: EdgeInsets.symmetric(horizontal: 25, vertical: 20),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(50.0)),
+      ),
+      validator: (value) {
+        if (value.isEmpty) {
+          return 'Required.';
+        }
+        return null;
+      },
+    ),
+  );
+}
 
 Widget signUpEmailField(TextEditingController controller) {
   return Padding(
@@ -45,7 +67,7 @@ Widget signUpPasswordField(TextEditingController controller) {
   );
 }
 
-Widget signUpPasswordConfirmField(TextEditingController controller) {
+Widget signUpPasswordConfirmField(TextEditingController controller, TextEditingController _password) {
   return Padding(
       padding: EdgeInsets.only(bottom: 10),
       child: TextFormField(
@@ -61,12 +83,18 @@ Widget signUpPasswordConfirmField(TextEditingController controller) {
           if (value.isEmpty) {
             return 'Required';
           }
+
+          if (value != _password.value.text) {
+            return 'Password does not match.';
+          }
           return null;
         },
       ));
 }
 
-Widget signUpBtn(GlobalKey<FormState> formKey) {
+Widget signUpBtn(BuildContext context, GlobalKey<FormState> formKey, TextEditingController username, TextEditingController email, TextEditingController password) {
+  final authService = AuthService();
+
   return Padding(
     padding: EdgeInsets.only(bottom: 5),
     child: ButtonTheme(
@@ -77,8 +105,16 @@ Widget signUpBtn(GlobalKey<FormState> formKey) {
           color: Colors.black87,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
-          onPressed: () => {
-                if (formKey.currentState.validate()) {print("Valid...")}
+          onPressed: () async => {
+                if (formKey.currentState.validate()) {
+                  await authService.register(username.value.text, email.value.text, password.value.text)
+                              .then((value) => {
+                                if (value) Navigator.of(context).pushReplacementNamed('/signin')
+                              })
+                              .catchError((error) {
+                                print(error.toString());
+                              })
+                }
               }),
     ),
   );

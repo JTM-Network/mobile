@@ -35,7 +35,7 @@ class _SignInPageState extends State<SignInPage> {
             children: <Widget>[
               emailSignInField(_emailController),
               passwordSignInField(_passwordController),
-              signInBtn(_formKey, _emailController, _passwordController),
+              signInBtn(context, _formKey, _emailController, _passwordController),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
