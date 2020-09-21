@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:jtm/data/service/auth_service.dart';
+import 'package:jtm/data/service/device_service.dart';
+import 'dart:io' show Platform;
 
 class HomePage extends StatefulWidget {
   @override
@@ -11,12 +13,16 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final service = AuthService();
+  final deviceService = DeviceService();
   Timer refreshTimer;
 
   @override
   void initState() {
     super.initState();
     refreshTimerInit();
+    
+    if (Platform.isAndroid) deviceService.insertDeviceAndroid();
+    if (Platform.isIOS) deviceService.insertDeviceIos();
   }
 
   @override

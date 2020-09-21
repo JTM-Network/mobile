@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:jtm/data/service/auth_service.dart';
-import 'package:jtm/presenter/widgets/sign_in.dart';
+import 'package:jtm/presenter/widgets/auth/sign_in.dart';
 
 class SignInPage extends StatefulWidget {
   @override

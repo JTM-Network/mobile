@@ -1,8 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:jtm/presenter/widgets/forgot_password.dart';
-import 'package:jtm/presenter/widgets/sign_up.dart';
+import 'package:jtm/presenter/widgets/auth/forgot_password.dart';
+import 'package:jtm/presenter/widgets/auth/sign_up.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
 
